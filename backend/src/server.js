@@ -10,6 +10,9 @@ import { inngest, functions } from "./lib/inngest.js";
 
 import chatRoutes from "./routes/chatRoutes.js";
 import meetingRoutes from "./routes/meetingRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -20,7 +23,9 @@ app.use(clerkMiddleware());
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 app.use("/api/meetings", meetingRoutes);
-
+app.use("/api/teams", teamRoutes);
+app.use("/api/tasks", taskRoutes); // task.routes.js already defines /teams/:teamId/tasks and /tasks/:id
+app.use("/api/ai", aiRoutes);
 
 if (ENV.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
